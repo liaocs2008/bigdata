@@ -20,7 +20,7 @@ def q():
     sc = SparkContext(conf=conf)
     sqlCtx = SQLContext(sc)
 
-    df = sqlCtx.read.format('com.databricks.spark.csv').option('header', 'true').option('inferSchema', 'true').load('2014.csv')
+    df = sqlCtx.read.format('com.databricks.spark.csv').option('header', 'true').option('inferSchema', 'true').load('yg2014.csv')
     df = df.withColumn("day", floor(col("tf") / 24) % 7 )
     df = df.withColumn("hour", col("tf") % 24 )
 
@@ -31,7 +31,7 @@ def q():
     df.show(30)
 
 
-    df2 = sqlCtx.read.format('com.databricks.spark.csv').option('header', 'true').option('inferSchema', 'true').load('2015.csv')
+    df2 = sqlCtx.read.format('com.databricks.spark.csv').option('header', 'true').option('inferSchema', 'true').load('yg2015.csv')
     df2 = df2.withColumn("day", floor(col("tf") / 24) % 7 )
     df2 = df2.withColumn("hour", col("tf") % 24 )
 
@@ -54,6 +54,8 @@ def q():
     from pyspark.ml.regression import RandomForestRegressor                            
     from pyspark.ml.feature import VectorIndexer                                       
     from pyspark.ml.evaluation import RegressionEvaluator                              
+
+
                                                                                        
     assembler_features = VectorAssembler(inputCols=cols_now, outputCol='features')  
     labelIndexer = StringIndexer(inputCol='p_cnt', outputCol="label")                  
